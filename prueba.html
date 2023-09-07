@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Contactos</title>
+</head>
+<body>
+  <h1>Lista de Contactos</h1>
+  
+  <ul id="contact-list"></ul>
+  
+  <button onclick="agregarContacto()">Agregar Contacto</button>
+  <button onclick="borrarContacto()">Borrar Contacto</button>
+  <button onclick="imprimirContactos()">Imprimir Contactos</button>
+  
+  <script>
+    let contactos = [
+      { nombre: "Juan", apellido: "Pérez" },
+      { nombre: "María", apellido: "García" },
+      { nombre: "Luis", apellido: "Rodríguez" }
+    ];
+    
+    function actualizarLista() {
+      const lista = document.getElementById("contact-list");
+      lista.innerHTML = "";
+      
+      for (let i = 0; i < contactos.length; i++) {
+        const li = document.createElement("li");
+        li.textContent = contactos[i].nombre + " " + contactos[i].apellido;
+        lista.appendChild(li);
+      }
+    }
+    
+    function agregarContacto() {
+      const nombre = prompt("Ingrese el nombre del nuevo contacto:");
+      const apellido = prompt("Ingrese el apellido del nuevo contacto:");
+      if (nombre && apellido) {
+        contactos.push({ nombre: nombre, apellido: apellido });
+        actualizarLista();
+      }
+    }
+    
+    function borrarContacto() {
+      const nombre = prompt("Ingrese el nombre del contacto a borrar:");
+      const apellido = prompt("Ingrese el apellido del contacto a borrar:");
+      const indice = contactos.findIndex(contacto => contacto.nombre === nombre && contacto.apellido === apellido);
+      if (indice !== -1) {
+        contactos.splice(indice, 1);
+        actualizarLista();
+      }
+    }
+    
+    function imprimirContactos() {
+      console.log("Lista de contactos:");
+      for (let i = 0; i < contactos.length; i++) {
+        console.log(i + 1 + ". " + contactos[i].nombre + " " + contactos[i].apellido);
+      }
+    }
+    
+    window.onload = function() {
+      actualizarLista();
+    };
+  </script>
+</body>
+</html>
