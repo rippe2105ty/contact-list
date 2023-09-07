@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Contactos</title>
+</head>
+<body>
+  <h1>Lista de Contactos</h1>
+  
+  <ul id="contact-list"></ul>
+  
+  <button onclick="agregarContacto()">Agregar Contacto</button>
+  <button onclick="borrarContacto()">Borrar Contacto</button>
+  <button onclick="imprimirContactos()">Imprimir Contactos</button>
+  
+  <script>
+    let contactos = [
+      {
+        nombres: "Juan",
+        apellidos: "Pérez",
+        telefono: "123456789",
+        ubicaciones: {
+          ciudad: "Ciudad de México",
+          direccion: "Calle 123"
+        }
+      },
+      {
+        nombres: "María",
+        apellidos: "García",
+        telefono: "2354654",
+        ubicaciones: {
+          ciudad: "Buenos Aires",
+          direccion: "carrerra 28 - 39"
+        }
+      },
+      {
+        nombres: "Luis",
+        apellidos: "Rodríguez",
+        telefono: "78945",
+        ubicaciones: {
+          ciudad: "Bucaramanga",
+          direccion: "avenida 7"
+        }
+      }
+    ];
+    
+    function actualizarLista() {
+      const lista = document.getElementById("contact-list");
+      lista.innerHTML = "";
+      
+      for (let i = 0; i < contactos.length; i++) {
+        const li = document.createElement("li");
+        const contacto = contactos[i];
+        li.textContent = `${contacto.nombres} ${contacto.apellidos} - Teléfono: ${contacto.telefono} - Ciudad: ${contacto.ubicaciones.ciudad}`;
+        lista.appendChild(li);
+      }
+    }
+    
+    function agregarContacto() {
+      const nombres = prompt("Ingrese los nombres del nuevo contacto:");
+      const apellidos = prompt("Ingrese los apellidos del nuevo contacto:");
+      const telefono = prompt("Ingrese el teléfono del nuevo contacto:");
+      const ciudad = prompt("Ingrese la ciudad del nuevo contacto:");
+      const direccion = prompt("Ingrese la dirección del nuevo contacto:");
+      
+      if (nombres && apellidos && telefono && ciudad && direccion) {
+        const nuevoContacto = {
+          nombres: nombres,
+          apellidos: apellidos,
+          telefono: telefono,
+          ubicaciones: {
+            ciudad: ciudad,
+            direccion: direccion
+          }
+        };
+        
+        contactos.push(nuevoContacto);
+        actualizarLista();
+      }
+    }
+    
+    function borrarContacto() {
+      const nombres = prompt("Ingrese los nombres del contacto a borrar:");
+      const apellidos = prompt("Ingrese los apellidos del contacto a borrar:");
+      
+      const indice = contactos.findIndex(contacto => contacto.nombres === nombres && contacto.apellidos === apellidos);
+      if (indice !== -1) {
+        contactos.splice(indice, 1);
+        actualizarLista();
+      }
+    }
+    
+    function imprimirContactos() {
+      console.log("Lista de contactos:");
+      for (let i = 0; i < contactos.length; i++) {
+        const contacto = contactos[i];
+        console.log(`${i + 1}. ${contacto.nombres} ${contacto.apellidos} - Teléfono: ${contacto.telefono} - Ciudad: ${contacto.ubicaciones.ciudad}`);
+      }
+    }
+    
+    window.onload = function() {
+      actualizarLista();
+    };
+  </script>
+</body>
+</html>
